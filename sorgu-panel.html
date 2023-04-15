@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Sorgu Paneli</title>
+    <style>
+      /* Genel sayfa stilleri */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      
+      /* Başlık stilleri */
+      h1 {
+        text-align: center;
+        margin: 20px 0;
+      }
+      
+      /* Arama kutusu stilleri */
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+      }
+      
+      /* Filtreleme alanı stilleri */
+      select {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+      }
+      
+      /* Liste görünümü stilleri */
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      li {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Sorgu Paneli</h1>
+    <form>
+      <label for="search">Arama:</label>
+      <input type="text" id="search" name="search" placeholder="Arama yapın...">
+      <label for="filter">Filtrele:</label>
+      <select id="filter" name="filter">
+        <option value="">Hepsi</option>
+        <option value="option1">Seçenek 1</option>
+        <option value="option2">Seçenek 2</option>
+        <option value="option3">Seçenek 3</option>
+      </select>
+    </form>
+    <ul id="results">
+      <li>Örnek sonuç 1</li>
+      <li>Örnek sonuç 2</li>
+      <li>Örnek sonuç 3</li>
+    </ul>
+    
+    <script>
+      const searchInput = document.getElementById('search');
+      const filterSelect = document.getElementById('filter');
+      const resultsList = document.getElementById('results');
+      
+      searchInput.addEventListener('keyup', () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filterValue = filterSelect.value;
+        filterResults(searchTerm, filterValue);
+      });
+      
+      filterSelect.addEventListener('change', () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filterValue = filterSelect.value;
+        filterResults(searchTerm, filterValue);
+      });
+      
+      function filterResults(searchTerm, filterValue) {
+        const lis = resultsList.getElementsByTagName('li');
+        for (let i = 0; i < lis.length; i++) {
+          const text = lis[i].textContent.toLowerCase();
+          const matchesSearch = text.includes(searchTerm);
+          const matchesFilter = (filterValue === '') || lis[i].classList.contains(filterValue);
+          if (matchesSearch && matchesFilter) {
+            lis[i].style.display = '';
+          } else {
+            lis[i].style.display = 'none';
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
